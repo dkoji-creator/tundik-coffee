@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tündik Coffee</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Демо-лендинг кофейни в Астане: меню, часы работы, бронирование столика. Учебный проект для портфолио.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;700&display=swap">
+<style>
+/* Layout: one column, bands of steppe sage and deep felt teal; the yurt crown (tündik) ring is the recurring motif */
+:root{
+  --bg:#EDF1EF; --surface:#FFFFFF; --fg:#1B2523; --muted:#56635F; --line:#CBD5D1;
+  --teal:#1E5A55; --teal-ink:#F2F7F5; --saffron:#C98A12; --saffron-soft:#F6E7C7;
+  --ok:#2E7D4F; --err:#B3261E;
+  --display:"Unbounded","Segoe UI",system-ui,sans-serif;
+  --body:"Manrope","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111816; --surface:#1A2421; --fg:#E7EEEB; --muted:#9DAEA8; --line:#2C3A36;
+  --teal:#2A7A73; --teal-ink:#F2F7F5; --saffron:#E3A93A; --saffron-soft:#3A2F17;
+  --ok:#5BBF84; --err:#F2817A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#111816; --surface:#1A2421; --fg:#E7EEEB; --muted:#9DAEA8; --line:#2C3A36;
+  --teal:#2A7A73; --teal-ink:#F2F7F5; --saffron:#E3A93A; --saffron-soft:#3A2F17;
+  --ok:#5BBF84; --err:#F2817A; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h2{font-size:clamp(1.5rem,3.2vw,2.1rem);font-weight:700}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--saffron);outline-offset:3px;border-radius:6px}
+.eyebrow{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;text-decoration:none;font-size:1.05rem}
+.nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font-weight:500}
+.nav ul a{text-decoration:none;color:var(--muted)}
+.nav ul a:hover{color:var(--fg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 22px;font:700 .95rem var(--body);cursor:pointer;text-decoration:none;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--saffron);color:#1B1406}
+.btn-ghost{background:transparent;color:var(--fg);border:1.5px solid var(--line)}
+@media (max-width:720px){.nav ul{display:none}}
+
+/* hero */
+.hero{padding-block:56px 64px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(2rem,5.4vw,3.6rem);font-weight:700}
+.hero h1 em{font-style:normal;color:var(--saffron)}
+.hero .lead{margin-top:18px;font-size:1.12rem;color:var(--muted);max-width:52ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.facts{display:flex;flex-wrap:wrap;gap:22px;margin-top:32px;font-size:.92rem;color:var(--muted)}
+.facts b{display:block;color:var(--fg);font-size:1.05rem}
+.crown{width:100%;max-width:360px;aspect-ratio:1;justify-self:center}
+.crown svg{width:100%;height:100%;display:block}
+@media (max-width:820px){.hero{grid-template-columns:1fr;padding-block:36px 44px}.crown{max-width:220px;order:-1}}
+
+/* menu */
+section{padding-block:64px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin-bottom:28px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tab{border:1.5px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:8px 16px;font:600 .9rem var(--body);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--teal);border-color:var(--teal);color:var(--teal-ink)}
+.menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding-block:16px;border-bottom:1px dashed var(--line)}
+.item h3{font-family:var(--body);font-weight:700;font-size:1.02rem}
+.item .price{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.item p{grid-column:1/-1;color:var(--muted);font-size:.92rem}
+.tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:var(--saffron-soft);color:var(--fg);font-size:.72rem;font-weight:700;vertical-align:2px}
+@media (max-width:720px){.menu{grid-template-columns:1fr}}
+
+/* about band */
+.band{background:var(--teal);color:var(--teal-ink)}
+.band .eyebrow{color:color-mix(in srgb,var(--teal-ink) 70%,transparent)}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.about p{max-width:60ch;opacity:.92}
+.about p+p{margin-top:14px}
+.points{display:grid;gap:18px;list-style:none;margin:0;padding:0}
+.points li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+.points .ic{width:44px;height:44px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--teal-ink) 40%,transparent);display:grid;place-items:center;font-family:var(--display);font-size:.9rem}
+.points b{display:block}
+@media (max-width:820px){.about{grid-template-columns:1fr}}
+
+/* visit + booking */
+.visit{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px;align-items:start}
+.hours{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-top:16px}
+.hours td{padding:10px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-weight:700}
+.hours tr.today td{color:var(--saffron)}
+.contact{margin-top:24px;display:grid;gap:6px;color:var(--muted)}
+.contact b{color:var(--fg)}
+form{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px;display:grid;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{display:grid;gap:6px;font-weight:600;font-size:.9rem}
+input,select{font:inherit;color:var(--fg);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:11px 12px;min-width:0;width:100%}
+input:focus,select:focus{border-color:var(--teal);outline:none}
+.err{color:var(--err);font-size:.82rem;font-weight:500;min-height:1em}
+.done{border:1.5px solid var(--ok);border-radius:var(--r);padding:20px;display:grid;gap:6px}
+.done b{color:var(--ok)}
+@media (max-width:820px){.visit{grid-template-columns:1fr}}
+@media (max-width:480px){.row{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);font-size:.88rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Tündik Coffee, наверх">
+      <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="var(--saffron)" stroke-width="3"/><path d="M20 3v34M3 20h34M8 8l24 24M32 8L8 32" stroke="var(--saffron)" stroke-width="2.4"/></svg>
+      Tündik
+    </a>
+    <ul>
+      <li><a href="#menu">Меню</a></li>
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#visit">Часы и адрес</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#book">Забронировать</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Кофейня · Астана, левый берег</p>
+      <h1>Кофе под открытым <em>шаныраком</em></h1>
+      <p class="lead">Обжариваем зерно небольшими партиями, печём баурсаки каждое утро и варим чай с молоком так, как его пьют дома. Заходите поработать, встретиться или просто согреться после ветра.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#book">Забронировать столик</a>
+        <a class="btn btn-ghost" href="#menu">Смотреть меню</a>
+      </div>
+      <div class="facts">
+        <span><b>с 8:00</b>каждый день</span>
+        <span><b>40 мест</b>и тихий зал</span>
+        <span><b>Wi-Fi</b>и розетки у окон</span>
+      </div>
+    </div>
+    <div class="crown" aria-hidden="true">
+      <svg viewBox="0 0 200 200">
+        <circle cx="100" cy="100" r="92" fill="var(--teal)"/>
+        <circle cx="100" cy="100" r="70" fill="none" stroke="var(--saffron)" stroke-width="6"/>
+        <g stroke="var(--saffron)" stroke-width="5" stroke-linecap="round">
+          <line x1="100" y1="34" x2="100" y2="166"/><line x1="34" y1="100" x2="166" y2="100"/>
+          <line x1="53" y1="53" x2="147" y2="147"/><line x1="147" y1="53" x2="53" y2="147"/>
+        </g>
+        <circle cx="100" cy="100" r="22" fill="var(--bg)"/>
+        <path d="M91 92h18v10a9 9 0 0 1-18 0z" fill="var(--teal)"/>
+        <path d="M109 95h3a4 4 0 0 1 0 8h-3" fill="none" stroke="var(--teal)" stroke-width="2.4"/>
+      </svg>
+    </div>
+  </div>
+
+  <section id="menu">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow">Меню</p><h2>Что у нас пьют и едят</h2></div>
+        <div class="tabs" role="tablist" aria-label="Разделы меню">
+          <button class="tab" role="tab" id="tab-coffee" aria-selected="true" data-cat="coffee">Кофе</button>
+          <button class="tab" role="tab" id="tab-tea" aria-selected="false" data-cat="tea">Чай</button>
+          <button class="tab" role="tab" id="tab-food" aria-selected="false" data-cat="food">Еда</button>
+        </div>
+      </div>
+      <div class="menu" id="menu-list" role="tabpanel" aria-labelledby="tab-coffee"></div>
+    </div>
+  </section>
+
+  <section id="about" class="band">
+    <div class="wrap about">
+      <div>
+        <p class="eyebrow">О нас</p>
+        <h2 style="margin-block:10px 18px">Түндік — круг света в крыше юрты</h2>
+        <p>Через түндік в юрту входит свет и выходит дым очага. Нам понравилась эта идея: место, где тепло внутри и видно небо.</p>
+        <p>Мы небольшая команда бариста. Зерно берём у обжарщиков из Алматы и Астаны, молоко местное, выпечку делаем сами.</p>
+      </div>
+      <ul class="points">
+        <li><span class="ic">1</span><div><b>Свежая обжарка</b>Зерно не старше трёх недель с даты обжарки.</div></li>
+        <li><span class="ic">2</span><div><b>Альтернативное молоко</b>Овсяное и кокосовое без доплаты.</div></li>
+        <li><span class="ic">3</span><div><b>Кофе с собой в свою кружку</b>Скидка 10% за многоразовый стакан.</div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="wrap visit">
+      <div>
+        <p class="eyebrow">Часы и адрес</p>
+        <h2>Ждём вас</h2>
+        <table class="hours" aria-label="Часы работы">
+          <tbody id="hours"></tbody>
+        </table>
+        <div class="contact">
+          <span><b>Адрес:</b> Астана, пример адреса, 1</span>
+          <span><b>Телефон:</b> +7 700 000 00 00</span>
+          <span><b>Instagram:</b> @tundik.demo</span>
+        </div>
+      </div>
+
+      <div id="book">
+        <form id="booking" novalidate>
+          <div><p class="eyebrow">Бронирование</p><h2 style="font-size:1.4rem;margin-top:6px">Забронировать столик</h2></div>
+          <label for="name">Имя
+            <input id="name" name="name" autocomplete="name" placeholder="Айгерим">
+            <span class="err" id="err-name"></span>
+          </label>
+          <label for="phone">Телефон
+            <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 7__ ___ __ __">
+            <span class="err" id="err-phone"></span>
+          </label>
+          <div class="row">
+            <label for="date">Дата
+              <input id="date" name="date" type="date">
+              <span class="err" id="err-date"></span>
+            </label>
+            <label for="time">Время
+              <select id="time" name="time"></select>
+              <span class="err" id="err-time"></span>
+            </label>
+          </div>
+          <label for="guests">Гостей
+            <select id="guests" name="guests">
+              <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+            </select>
+          </label>
+          <button class="btn btn-primary" type="submit">Забронировать</button>
+        </form>
+        <div class="done" id="done" hidden>
+          <b>Заявка принята</b>
+          <span id="done-text"></span>
+          <span style="color:var(--muted);font-size:.9rem">Это демо: заявка никуда не отправляется.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Tündik Coffee: вымышленная кофейня, демо-проект для портфолио.</span>
+    <span>Сайт: Nurtas Seitkali, github.com/dkoji-creator</span>
+  </div>
+</footer>
+
+<script>
+const MENU={
+  coffee:[
+    ["Эспрессо","Плотный, с нотами какао и ореха.",700],
+    ["Американо","Эспрессо и горячая вода, 250 мл.",900],
+    ["Капучино","Эспрессо и молочная пена, 300 мл.",1300],
+    ["Флэт уайт","Двойной эспрессо, меньше молока, больше вкуса.",1500],
+    ["Раф с халвой","Сливки, ваниль и кунжутная халва.",1900,"хит"],
+    ["Фильтр дня","Воронка V60, зерно меняется каждую неделю.",1400]
+  ],
+  tea:[
+    ["Чай с молоком","Чёрный чай, молоко, по-домашнему. Чайник на двоих.",1200,"хит"],
+    ["Облепиховый","Облепиха, мёд, апельсин.",1500],
+    ["Зелёный жасмин","Листовой, заваривается при 80°.",1000],
+    ["Масала","Чёрный чай, специи, молоко.",1400]
+  ],
+  food:[
+    ["Баурсаки","Свежие, к чаю. Порция 6 шт.",900],
+    ["Круассан с сыром","Сливочное тесто, сыр гауда.",1300],
+    ["Сырники","Со сметаной и ягодным соусом.",2200],
+    ["Сэндвич с кониной","Казы, сливочный сыр, свежие овощи.",2600,"новое"]
+  ]
+};
+const fmt=n=>n.toLocaleString("ru-RU").replace(/ /g," ")+" ₸";
+const list=document.getElementById("menu-list");
+function showMenu(cat){
+  list.innerHTML=MENU[cat].map(([n,d,p,t])=>`<div class="item"><h3>${n}${t?`<span class="tag">${t}</span>`:""}</h3><span class="price">${fmt(p)}</span><p>${d}</p></div>`).join("");
+  document.querySelectorAll(".tab").forEach(b=>{const on=b.dataset.cat===cat;b.setAttribute("aria-selected",on);if(on)list.setAttribute("aria-labelledby",b.id)});
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showMenu(b.dataset.cat)));
+showMenu("coffee");
+
+const DAYS=[["Понедельник","8:00 – 21:00"],["Вторник","8:00 – 21:00"],["Среда","8:00 – 21:00"],["Четверг","8:00 – 21:00"],["Пятница","8:00 – 23:00"],["Суббота","9:00 – 23:00"],["Воскресенье","9:00 – 21:00"]];
+const today=(new Date().getDay()+6)%7;
+document.getElementById("hours").innerHTML=DAYS.map(([d,h],i)=>`<tr${i===today?' class="today"':""}><td>${d}${i===today?" (сегодня)":""}</td><td>${h}</td></tr>`).join("");
+
+const timeSel=document.getElementById("time");
+for(let h=9;h<=21;h++)for(const m of ["00","30"]){if(h===21&&m==="30")break;timeSel.add(new Option(`${h}:${m}`))}
+const dateIn=document.getElementById("date");
+const iso=d=>d.toISOString().slice(0,10);
+dateIn.min=iso(new Date());dateIn.value=iso(new Date(Date.now()+864e5));
+
+const form=document.getElementById("booking");
+form.addEventListener("submit",e=>{
+  e.preventDefault();
+  const v={name:form.name.value.trim(),phone:form.phone.value.replace(/\D/g,""),date:dateIn.value,time:timeSel.value,guests:form.guests.value};
+  const errs={name:v.name.length<2?"Напишите имя":"",phone:(v.phone.length===11&&/^[78]7/.test(v.phone))?"":"Номер в формате +7 7XX XXX XX XX",date:!v.date||v.date<dateIn.min?"Выберите дату не раньше сегодняшней":"",time:""};
+  let ok=true;for(const k in errs){document.getElementById("err-"+k).textContent=errs[k];if(errs[k])ok=false}
+  if(!ok)return;
+  const d=new Date(v.date+"T00:00").toLocaleDateString("ru-RU",{day:"numeric",month:"long",weekday:"long"});
+  document.getElementById("done-text").textContent=`${v.name}, ждём вас ${d} в ${v.time}. Гостей: ${v.guests}. Перезвоним для подтверждения.`;
+  form.hidden=true;document.getElementById("done").hidden=false;
+});
+</script>
+</body>
+</html>
